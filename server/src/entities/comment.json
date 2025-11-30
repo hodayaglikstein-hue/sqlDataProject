@@ -1,0 +1,7 @@
+{
+  "id": "int primary key auto_increment",
+  "user_id": "int",
+  "post_id": "int",
+  "title": "varchar(255)",
+  "body": "varchar(255)"
+}
