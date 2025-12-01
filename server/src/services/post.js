@@ -1,15 +1,19 @@
 const posts = require("../repositories/post");
 
-function sendAllPosts() {
-  posts.getAllPosts();
+async function sendAllPosts() {
+  return await posts.getAllPosts();
 }
 
-function sendPosts(user_id) {
-  posts.getPostsById(user_id);
+async function sendPosts(user_id) {
+  return await posts.getPostsById(user_id);
 }
 
-function addPosts(user_id, title, body) {
-  posts.createPost(user_id, title, body);
+async function sendWriterName(user_id) {
+  return await posts.getWriterName(user_id);
+}
+
+async function addPosts(user_id, title, body) {
+  return await posts.createPost(user_id, title, body);
 }
 
 function removePost(id) {
@@ -29,4 +33,5 @@ module.exports = {
   addPosts,
   removePost,
   changePostContent,
+  sendWriterName,
 };

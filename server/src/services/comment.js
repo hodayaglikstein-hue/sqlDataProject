@@ -1,12 +1,15 @@
 const comment = require("../repositories/comment");
 
-function sendAllPostComments(post_id) {
-  console.log("postid: " + post_id);
-  comment.getAllPostComments(post_id);
+async function sendAllPostComments(post_id) {
+  return await comment.getAllPostComments(post_id);
 }
 
 function sendCommentById(id) {
   comment.getCommentById(id);
+}
+
+async function sendWriterName(user_id) {
+  return await comment.getWriterName(user_id);
 }
 
 function addComment(user_id, post_id, title, body) {
@@ -30,4 +33,5 @@ module.exports = {
   addComment,
   removeComment,
   changeCommentContent,
+  sendWriterName,
 };

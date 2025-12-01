@@ -1,11 +1,18 @@
 var connection = require("../../db/connection.js");
 
 async function getAllPostComments(post_id) {
-  console.log("getAllPostComments CALLED with post_id:", post_id);
   const sql = `SELECT * FROM comment WHERE post_id = ${post_id}`;
   const [rows] = await connection.promise().query(sql);
   console.table(rows);
+  console.log("comments2: " + rows);
+
   return rows;
+}
+
+async function getWriterName(user_id) {
+  const sql = `SELECT username FROM user WHERE id = ${user_id}`;
+  const [rows] = await connection.promise().query(sql);
+  return rows[0].username;
 }
 
 async function getCommentById(id) {
@@ -35,4 +42,5 @@ module.exports = {
   createComment,
   deleteComment,
   updateComment,
+  getWriterName,
 };

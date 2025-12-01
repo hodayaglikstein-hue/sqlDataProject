@@ -2,24 +2,39 @@ var express = require("express");
 var router = express.Router();
 const postActions = require("../services/post");
 
-router.get("/", function (req, res, next) {
-  const posts = postActions.sendAllPosts();
+router.get("/", async function (req, res, next) {
+  const posts = await postActions.sendAllPosts();
   res.json(posts);
 });
 
-router.get("/:user_id", function (req, res, next) {
+router.get("/username/:user_id", async function (req, res, next) {
+  console.log("here");
   if (typeof JSON.parse(req.params.user_id) !== "number") {
     throw Error("Id is wrong");
   }
-  const posts = postActions.sendPosts(req.params.user_id);
+  const posts = await postActions.sendPosts(req.params.user_id);
   res.json(posts);
 });
 
-router.post("/new", function (req, res, next) {
+router.get("/:username/:user_id/getname", async function (req, res, next) {
+  if (typeof JSON.parse(req.params.user_id) !== "number") {
+    throw Error("Id is wrong");
+  }
+
+  const name = await postActions.sendWriterName(req.params.user_id);
+  res.json(name);
+});
+
+router.post("/new", async function (req, res, next) {
   if (!req.body.user_id || !req.body.title || !req.body.body) {
     throw Error("all required");
   }
-  postActions.addPosts(req.body.user_id, req.body.title, req.body.body);
+  const created = await postActions.addPosts(
+    req.body.user_id,
+    req.body.title,
+    req.body.body
+  );
+  res.json(created);
 });
 
 router.delete("/:id", function (req, res, next) {
