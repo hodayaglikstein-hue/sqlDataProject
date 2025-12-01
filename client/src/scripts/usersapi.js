@@ -1,8 +1,8 @@
-const url = "http://localhost:3000/users";
+const url = "http://localhost:3000/login";
 
 export async function login(username, password) {
   try {
-    await fetch(`${url}`, {
+    const res = await fetch(`${url}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -10,7 +10,12 @@ export async function login(username, password) {
         password,
       }),
     });
+
+    const data = await res.json();
+    console.log(JSON.stringify(data));
+
+    return data;
   } catch (err) {
-    alert("failed to login");
+    alert("failed to login " + err);
   }
 }

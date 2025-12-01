@@ -2,24 +2,29 @@ var express = require("express");
 const loginUser = require("../services/loginUser");
 var router = express.Router();
 
-router.post("/", function (req, res, next) {
+router.post("/", async function (req, res, next) {
   const username = req.body.username;
   const password = req.body.password;
+  console.log("h");
 
   if (!username || !password) {
-    throw Error("Username and passsword are required");
+    return Error("Username and passsword are required");
   }
 
-  if (username.length < 1 || password.length < 8) {
-    throw Error("Username length or password length are wrong");
-  }
+  // if (username.length < 1 || password.length < 8) {
+  //   throw Error("Username length or password length are wrong");
+  // }
 
-  const success = loginUser(username, password);
+  const user = await loginUser(username, password);
+
+  const success = user.success;
 
   if (!success) {
-    throw Error("Username or password are wrong");
+    console.log("Username or password are wrong");
+    return;
   } else {
     console.log("logging in");
+    res.json({ username: user.username, id: user.id });
   }
 });
 

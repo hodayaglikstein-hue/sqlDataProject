@@ -13,18 +13,20 @@ router.get("/:user_id", async function (req, res) {
 
 router.post("/:user_id/new", async function (req, res, next) {
   console.log("title1: " + req.body.title);
-  await todoActions.addTodo(req.body.title, req.params.user_id);
-  res.send("succses");
+  const created = await todoActions.addTodo(req.body.title, req.params.user_id);
+  res.send(created);
 });
 
-router.delete("/:id/delete", async function (req, res, next) {
-  await todoActions.deleteTodo1(req.params.id);
+router.delete("/:todo_id/delete", async function (req, res, next) {
+  console.log("three: " + req.params.todo_id);
+
+  await todoActions.deleteTodo1(req.params.todo_id);
   res.send("success");
 });
 
-router.patch("/:id/update", async function (req, res, next) {
-  await todoActions.updateTodo(req.params.id);
-  res.send("success");
+router.patch("/:todo_id/update", async function (req, res, next) {
+  const updated = await todoActions.updateTodo(req.params.todo_id);
+  res.send(updated);
 });
 
 module.exports = router;

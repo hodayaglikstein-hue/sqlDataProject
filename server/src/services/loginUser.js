@@ -1,17 +1,21 @@
 const findUser = require("../repositories/users");
 
 async function loginUser(username, password) {
-  const user = await findUser(username);
+  const user = await findUser.findUser(username);
+  console.log("hey2: ");
+  console.log(user);
 
   if (!user) {
-    throw Error("User isn't exist");
+    console.log("User not found");
+    return;
   }
 
   if (user.password !== password) {
-    throw Error("Username or password are inccorrect");
+    console.log("Username or password are inccorrect");
+    return;
   }
 
-  return true;
+  return { username: username, id: user.id, success: true };
 }
 
 module.exports = loginUser;

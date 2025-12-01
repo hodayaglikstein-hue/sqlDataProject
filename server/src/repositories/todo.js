@@ -6,12 +6,14 @@ async function getTodos(user_id) {
   console.table(rows);
   return rows;
 }
-function addTodo(title, user_id) {
-  return connection
+async function addTodo(title, user_id) {
+  return await connection
     .promise()
     .query(`insert into todo (title, user_id) values('${title}', ${user_id})`);
 }
 function deleteTodo(id) {
+  console.log("one: " + id);
+
   return connection.promise().query(`delete from todo where id=${id}`);
 }
 
@@ -20,9 +22,10 @@ async function updateTodo(id) {
   let setCompleted = 0;
   isCompleted === 1 ? (setCompleted = 0) : (setCompleted = 1);
   getCompletedById(id);
-  return connection
+  const [rows] = await connection
     .promise()
     .query(`update todo set completed=${setCompleted} where id=${id}`);
+  return await getTodoById(id);
 }
 
 async function getCompletedById(id) {
@@ -30,6 +33,12 @@ async function getCompletedById(id) {
     .promise()
     .query(`SELECT completed FROM todo WHERE id=${id}`);
   return rows[0].completed;
+}
+
+async function getTodoById(id) {
+  const sql = `SELECT * FROM todo where id = ${id}`;
+  const [rows] = await connection.promise().query(sql);
+  return rows;
 }
 
 module.exports = { getTodos, addTodo, deleteTodo, updateTodo };

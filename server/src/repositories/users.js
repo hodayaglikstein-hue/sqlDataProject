@@ -1,14 +1,19 @@
 var connection = require("../../db/connection.js");
 
-function findUserId(username) {
+async function findUserId(username) {
   const sql = `SELECT id FROM user WHERE username="${username}"`;
-  const res = connection.promise().query(sql);
-  return res;
+  const [rows] = await connection.promise().query(sql);
+  console.table(rows);
+  console.log("res:" + rows);
+  return rows;
 }
 
 async function findUser(username) {
   const [obj] = await findUserId(username);
-  const id = obj[0].id;
+  console.log(obj);
+  const id = obj.id;
+  console.log(id + " hey");
+
   if (!id) {
     throw Error("User not found");
   }
@@ -17,7 +22,11 @@ async function findUser(username) {
   if (rows.length === 0) {
     return null;
   } else {
-    return { user_id: id, password: rows[0].password };
+    return {
+      username: username,
+      id: id,
+      password: rows[0].password,
+    };
   }
 }
 

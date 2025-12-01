@@ -30,7 +30,7 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/todo", todoRouter);
-app.use("/user", userRouter);
+app.use("/users", userRouter);
 app.use("/posts", postsRouter);
 app.use("/posts/:post_id/comments", commentsRouter);
 
