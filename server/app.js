@@ -9,7 +9,7 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 let loginRouter = require("./src/routes/login");
 let todoRouter = require("./src/routes/todo");
-
+let userRouter = require("./src/routes/user");
 let postsRouter = require("./src/routes/posts");
 let commentsRouter = require("./src/routes/comments");
 
@@ -27,8 +27,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
-app.use("/todo", loginRouter);
-
+app.use("/todo", todoRouter);
+app.use("/user", userRouter);
 app.use("/posts", postsRouter);
 app.use("/posts/:post_id/comments", commentsRouter);
 

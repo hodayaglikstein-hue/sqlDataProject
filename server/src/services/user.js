@@ -1,7 +1,7 @@
-const todoActions = require("../repositories/user");
+const userActions = require("../repositories/users");
 
-async function addUser() {
-  return await todoActions.addTodo();
+async function addUser(username, email) {
+  return await userActions.addUser(username, email);
 }
 
 module.exports = { addUser };

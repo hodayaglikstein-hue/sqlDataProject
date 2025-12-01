@@ -1,23 +1,35 @@
 var connection = require("../../db/connection.js");
 
-function getTodos(username) {
-  const sql = `SELECT * FROM user`;
-  const res = connection.promise().query(sql);
-  return res;
+async function getTodos(user_id) {
+  const sql = `SELECT * FROM todo WHERE user_id = ${user_id}`;
+  const [rows] = await connection.promise().query(sql);
+  console.table(rows);
+  return rows;
 }
-function addTodo(title) {
+function addTodo(title, user_id) {
   return connection
     .promise()
-    .query(`insert into todo (title) values('${title}'`);
+    .query(`insert into todo (title, user_id) values('${title}', ${user_id})`);
 }
 function deleteTodo(id) {
-  return connection.promise().query(`delete from todo where id= ${id}`);
+  return connection.promise().query(`delete from todo where id=${id}`);
 }
 
-function updateTodo(id) {
+async function updateTodo(id) {
+  const isCompleted = await getCompletedById(id);
+  let setCompleted = 0;
+  isCompleted === 1 ? (setCompleted = 0) : (setCompleted = 1);
+  getCompletedById(id);
   return connection
     .promise()
-    .query(`update todo set completed=1 where id=${id}`);
+    .query(`update todo set completed=${setCompleted} where id=${id}`);
+}
+
+async function getCompletedById(id) {
+  const [rows] = await connection
+    .promise()
+    .query(`SELECT completed FROM todo WHERE id=${id}`);
+  return rows[0].completed;
 }
 
 module.exports = { getTodos, addTodo, deleteTodo, updateTodo };

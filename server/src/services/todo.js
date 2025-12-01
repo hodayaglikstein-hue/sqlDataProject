@@ -1,17 +1,16 @@
 const todoActions = require("../repositories/todo");
 
-async function getTodos() {
-  return await todoActions.getTodos();
+function getTodos(user_id) {
+  return todoActions.getTodos(user_id);
+}
+function addTodo(title, user_id) {
+  return todoActions.addTodo(title, user_id);
+}
+function deleteTodo1(id) {
+  return todoActions.deleteTodo(id);
+}
+function updateTodo(id) {
+  return todoActions.updateTodo(id);
 }
 
-async function addTodo() {
-  return await todoActions.addTodo();
-}
-async function deleteTodo() {
-  return await todoActions.deleteTodo();
-}
-async function updateTodo() {
-  return await todoActions.updateTodo();
-}
-
-module.exports = { getTodos, addTodo, deleteTodo, updateTodo };
+module.exports = { getTodos, addTodo, deleteTodo1, updateTodo };
