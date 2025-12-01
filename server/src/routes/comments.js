@@ -4,6 +4,7 @@ const commentsActions = require("../services/comment");
 
 router.get("/", function (req, res, next) {
   const comments = commentsActions.sendAllPostComments(req.params.post_id);
+  res.json(comments);
 });
 
 router.post("/new", function (req, res, next) {
