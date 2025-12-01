@@ -4,6 +4,7 @@ const postActions = require("../services/post");
 
 router.get("/", function (req, res, next) {
   const posts = postActions.sendAllPosts();
+  res.json(posts);
 });
 
 router.get("/:user_id", function (req, res, next) {
@@ -11,6 +12,7 @@ router.get("/:user_id", function (req, res, next) {
     throw Error("Id is wrong");
   }
   const posts = postActions.sendPosts(req.params.user_id);
+  res.json(posts);
 });
 
 router.post("/new", function (req, res, next) {
