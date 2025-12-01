@@ -3,7 +3,6 @@ var connection = require("../../db/connection.js");
 async function getAllPosts() {
   const sql = `SELECT * FROM post`;
   const [rows] = await connection.promise().query(sql);
-  console.table(rows);
   return rows;
 }
 
@@ -13,9 +12,15 @@ async function getPostsById(user_id) {
   return rows;
 }
 
+async function getWriterName(user_id) {
+  const sql = `SELECT username FROM user WHERE id = ${user_id}`;
+  const [rows] = await connection.promise().query(sql);
+  return rows[0].username;
+}
+
 async function createPost(user_id, title, body) {
   const sql = `INSERT INTO post (user_id, title, body) VALUES (${user_id}, "${title}", "${body}")`;
-  await connection.promise().query(sql);
+  return await connection.promise().query(sql);
 }
 
 async function deletePost(id) {
@@ -34,4 +39,5 @@ module.exports = {
   createPost,
   deletePost,
   updatePost,
+  getWriterName,
 };

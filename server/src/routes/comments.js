@@ -2,10 +2,27 @@ var express = require("express");
 var router = express.Router({ mergeParams: true });
 const commentsActions = require("../services/comment");
 
-router.get("/", function (req, res, next) {
-  const comments = commentsActions.sendAllPostComments(req.params.post_id);
+router.get("/", async function (req, res, next) {
+  const comments = await commentsActions.sendAllPostComments(
+    req.params.post_id
+  );
+  console.log("COMMENTS!!");
+  console.log("comments1: " + comments);
   res.json(comments);
 });
+
+router.get(
+  //
+  "/:user_id/getname",
+  async function (req, res, next) {
+    if (typeof JSON.parse(req.params.user_id) !== "number") {
+      throw Error("Id is wrong");
+    }
+
+    const name = await commentsActions.sendWriterName(req.params.user_id);
+    res.json(name);
+  }
+);
 
 router.post("/new", function (req, res, next) {
   if (!req.body.user_id || !req.body.title || !req.body.body) {
