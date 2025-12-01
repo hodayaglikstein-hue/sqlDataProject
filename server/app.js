@@ -8,6 +8,7 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 let loginRouter = require("./src/routes/login");
+let todoRouter = require("./src/routes/todo");
 
 var create = require("./scripts/createTables");
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
+app.use("/todo", loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -21,4 +21,10 @@ async function findUser(username) {
   }
 }
 
-module.exports = findUser;
+function addUser(username, email) {
+  return connection
+    .promise()
+    .query(`insert into todo (username, email) values('${username}''${email}'`);
+}
+
+module.exports = { findUser, addUser };
