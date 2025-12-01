@@ -9,6 +9,9 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 let loginRouter = require("./src/routes/login");
 
+let postsRouter = require("./src/routes/posts");
+let commentsRouter = require("./src/routes/comments");
+
 var create = require("./scripts/createTables");
 
 // view engine setup
@@ -23,6 +26,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
+
+app.use("/posts", postsRouter);
+app.use("/posts/:post_id/comments", commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
