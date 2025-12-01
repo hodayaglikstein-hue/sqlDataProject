@@ -18,9 +18,9 @@ function Navbar() {
       {""}
       <Link to="/todo"> Todos </Link>
       {""}
-      {/* <Link to="/userPosts"> MyPosts </Link>
+      {/* <Link to="/userPosts"> MyPosts </Link> */}
       {""}
-      <Link to="/allPosts"> AllPosts </Link> */}
+      <Link to="/posts"> AllPosts </Link>
 
       <br />
     </nav>
