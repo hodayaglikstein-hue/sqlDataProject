@@ -2,8 +2,6 @@ const findUser = require("../repositories/users");
 
 async function loginUser(username, password) {
   const user = await findUser.findUser(username);
-  console.log("hey2: ");
-  console.log(user);
 
   if (!user) {
     console.log("User not found");

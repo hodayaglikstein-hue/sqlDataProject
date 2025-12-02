@@ -3,17 +3,12 @@ var connection = require("../../db/connection.js");
 async function findUserId(username) {
   const sql = `SELECT id FROM user WHERE username="${username}"`;
   const [rows] = await connection.promise().query(sql);
-  console.table(rows);
-  console.log("res:" + rows);
   return rows;
 }
 
 async function findUser(username) {
   const [obj] = await findUserId(username);
-  console.log(obj);
   const id = obj.id;
-  console.log(id + " hey");
-
   if (!id) {
     throw Error("User not found");
   }

@@ -7,8 +7,6 @@ function addTodo(title, user_id) {
   return todoActions.addTodo(title, user_id);
 }
 function deleteTodo1(id) {
-  console.log("two: " + id);
-
   return todoActions.deleteTodo(id);
 }
 async function updateTodo(id) {

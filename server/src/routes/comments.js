@@ -6,8 +6,6 @@ router.get("/", async function (req, res, next) {
   const comments = await commentsActions.sendAllPostComments(
     req.params.post_id
   );
-  console.log("COMMENTS!!");
-  console.log("comments1: " + comments);
   res.json(comments);
 });
 

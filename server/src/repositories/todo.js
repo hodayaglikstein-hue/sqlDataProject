@@ -3,7 +3,6 @@ var connection = require("../../db/connection.js");
 async function getTodos(user_id) {
   const sql = `SELECT * FROM todo WHERE user_id = ${user_id}`;
   const [rows] = await connection.promise().query(sql);
-  console.table(rows);
   return rows;
 }
 async function addTodo(title, user_id) {
@@ -12,8 +11,6 @@ async function addTodo(title, user_id) {
     .query(`insert into todo (title, user_id) values('${title}', ${user_id})`);
 }
 function deleteTodo(id) {
-  console.log("one: " + id);
-
   return connection.promise().query(`delete from todo where id=${id}`);
 }
 

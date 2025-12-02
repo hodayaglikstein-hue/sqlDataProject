@@ -25,7 +25,7 @@ function Posts() {
 
   useEffect(() => {
     async function firstFetch() {
-      fetchPosts();
+      await fetchPosts();
     }
     firstFetch();
   }, []);
@@ -37,7 +37,7 @@ function Posts() {
         <AddPostButton setPosts={setPosts} fetchPosts={fetchPosts} />
       </div>
       <div id="all-post-container">
-        <PostData posts={posts} />
+        <PostData posts={posts} fetchPosts={fetchPosts} />
       </div>
     </>
   );

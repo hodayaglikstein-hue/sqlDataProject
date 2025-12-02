@@ -3,11 +3,8 @@ const url = "http://localhost:3000/posts";
 
 export async function getComments(post_id) {
   try {
-    console.log("in!!");
     const res = await fetch(`${url}/${post_id}/comments`);
-    console.log(res);
     const data = await res.json();
-    console.log(data);
     return JSON.stringify(data);
   } catch (err) {
     alert("failed to fetch comments: " + err);

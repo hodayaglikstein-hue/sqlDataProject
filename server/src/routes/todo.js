@@ -12,14 +12,11 @@ router.get("/:user_id", async function (req, res) {
 });
 
 router.post("/:user_id/new", async function (req, res, next) {
-  console.log("title1: " + req.body.title);
   const created = await todoActions.addTodo(req.body.title, req.params.user_id);
   res.send(created);
 });
 
 router.delete("/:todo_id/delete", async function (req, res, next) {
-  console.log("three: " + req.params.todo_id);
-
   await todoActions.deleteTodo1(req.params.todo_id);
   res.send("success");
 });

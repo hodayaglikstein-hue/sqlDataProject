@@ -12,7 +12,6 @@ export async function login(username, password) {
     });
 
     const data = await res.json();
-    console.log(JSON.stringify(data));
 
     return data;
   } catch (err) {

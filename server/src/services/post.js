@@ -16,15 +16,19 @@ async function addPosts(user_id, title, body) {
   return await posts.createPost(user_id, title, body);
 }
 
-function removePost(id) {
-  posts.deletePost(id);
+async function removePost(id) {
+  await posts.deletePost(id);
 }
 
-function changePostContent(col, value, id) {
+async function removePostComments(post_id) {
+  await posts.deletePostComments(post_id);
+}
+
+async function changePostContent(col, value, id) {
   if ((col !== "title" && col !== "body") || value === "") {
     throw Error("invaild col");
   }
-  posts.updatePost(col, value, id);
+  await posts.updatePost(col, value, id);
 }
 
 module.exports = {
@@ -34,4 +38,5 @@ module.exports = {
   removePost,
   changePostContent,
   sendWriterName,
+  removePostComments,
 };

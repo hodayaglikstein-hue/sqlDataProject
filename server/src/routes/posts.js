@@ -7,8 +7,7 @@ router.get("/", async function (req, res, next) {
   res.json(posts);
 });
 
-router.get("/username/:user_id", async function (req, res, next) {
-  console.log("here");
+router.get("/byuser/:user_id", async function (req, res, next) {
   if (typeof JSON.parse(req.params.user_id) !== "number") {
     throw Error("Id is wrong");
   }
@@ -37,21 +36,43 @@ router.post("/new", async function (req, res, next) {
   res.json(created);
 });
 
-router.delete("/:id", function (req, res, next) {
+router.delete("/:id", async function (req, res, next) {
   if (typeof JSON.parse(req.params.id) !== "number") {
     throw Error("Id is wrong");
   }
-  postActions.removePost(req.params.id);
+  try {
+    await postActions.removePost(req.params.id);
+    return true;
+  } catch (err) {
+    return false;
+  }
 });
 
-router.patch("/:id/update", function (req, res, next) {
+router.delete("/:post_id/all", function (req, res, next) {
+  if (typeof JSON.parse(req.params.post_id) !== "number") {
+    throw Error("Id is wrong");
+  }
+  postActions.removePostComments(req.params.post_id);
+});
+
+router.patch("/:id/update", async function (req, res, next) {
   if (typeof JSON.parse(req.params.id) !== "number") {
     throw Error("Id is wrong");
   }
   if (!req.body.col || !req.body.value) {
     throw Error("NO");
   }
-  postActions.changePostContent(req.body.col, req.body.value, req.params.id);
+  try {
+    await postActions.changePostContent(
+      req.body.col,
+      req.body.value,
+      req.params.id
+    );
+    res.json(true);
+  } catch (err) {
+    console.error(err);
+    res.json(false);
+  }
 });
 
 module.exports = router;

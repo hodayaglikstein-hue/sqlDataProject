@@ -24,7 +24,13 @@ async function createPost(user_id, title, body) {
 }
 
 async function deletePost(id) {
+  deletePostComments(id);
   const sql = `DELETE FROM post WHERE id = ${id}`;
+  await connection.promise().query(sql);
+}
+
+async function deletePostComments(post_id) {
+  const sql = `DELETE FROM comment WHERE post_id = ${post_id}`;
   await connection.promise().query(sql);
 }
 
@@ -40,4 +46,5 @@ module.exports = {
   deletePost,
   updatePost,
   getWriterName,
+  deletePostComments,
 };

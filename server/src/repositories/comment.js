@@ -3,9 +3,6 @@ var connection = require("../../db/connection.js");
 async function getAllPostComments(post_id) {
   const sql = `SELECT * FROM comment WHERE post_id = ${post_id}`;
   const [rows] = await connection.promise().query(sql);
-  console.table(rows);
-  console.log("comments2: " + rows);
-
   return rows;
 }
 

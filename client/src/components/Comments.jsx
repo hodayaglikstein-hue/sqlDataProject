@@ -17,7 +17,6 @@ function Comments(props) {
           return { ...comment, writer: JSON.parse(writer) };
         })
       );
-      console.log(commentsWithNames);
       setComments(commentsWithNames);
     } catch (err) {
       console.error("Error fetching posts:", err);
@@ -32,7 +31,7 @@ function Comments(props) {
   }, []);
   return (
     <>
-      <div>
+      <div className="comments-container">
         <CommentsData comments={comments} />
       </div>
     </>

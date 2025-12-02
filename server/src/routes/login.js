@@ -5,15 +5,10 @@ var router = express.Router();
 router.post("/", async function (req, res, next) {
   const username = req.body.username;
   const password = req.body.password;
-  console.log("h");
 
   if (!username || !password) {
     return Error("Username and passsword are required");
   }
-
-  // if (username.length < 1 || password.length < 8) {
-  //   throw Error("Username length or password length are wrong");
-  // }
 
   const user = await loginUser(username, password);
 

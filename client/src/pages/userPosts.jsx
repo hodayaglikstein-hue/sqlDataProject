@@ -1,16 +1,28 @@
 import { useEffect } from "react";
-import { getUserPosts } from "../scripts/postsapi";
+import { getUserPosts, getWriterName } from "../scripts/postsapi";
 import { useState } from "react";
+import PostData from "../components/PostData";
+import AddPostButton from "../components/AddPost";
 
 function UserPosts() {
   const [posts, setPosts] = useState([]);
+  const user = JSON.parse(localStorage.getItem("currentUser"));
   async function fetchPosts() {
-    const data = await getUserPosts(user.username, user.id);
-    const parsedData = JSON.parse(data);
-    setPosts(parsedData);
+    try {
+      const data = await getUserPosts(user.id);
+      const parsedData = JSON.parse(data);
+      const postsWithNames = await Promise.all(
+        parsedData.map(async (post) => {
+          const writer = await getWriterName(post.user_id);
+          return { ...post, writer: JSON.parse(writer) };
+        })
+      );
+      setPosts(postsWithNames);
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    }
   }
 
-  const user = JSON.parse(localStorage.getItem("currentUser"));
   useEffect(() => {
     async function firstFetch() {
       fetchPosts();
@@ -18,21 +30,14 @@ function UserPosts() {
     firstFetch();
   }, []);
 
-  // JSON.parse(localStorage.getItem("currentUser")).id;
-
   return (
     <>
-      <h1>{user.username}'s, Posts</h1>
+      <h1>{user.username}'s Posts</h1>
+      <div>
+        <AddPostButton setPosts={setPosts} fetchPosts={fetchPosts} />
+      </div>
       <div id="all-post-container">
-        {posts.map((post) => {
-          return (
-            <div key={post.id} className="post-container">
-              <h2>{post.title}</h2>
-              <h3>{post.body}</h3>
-              <h4>Post Id: {post.id}</h4>
-            </div>
-          );
-        })}
+        <PostData posts={posts} fetchPosts={fetchPosts} />
       </div>
     </>
   );

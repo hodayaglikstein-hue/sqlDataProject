@@ -7,22 +7,15 @@ function Navbar() {
     localStorage.clear();
     navigate("/login");
   }
+  const user = JSON.parse(localStorage.getItem("currentUser"));
 
   return (
     <nav>
       <button onClick={onLogout}>Logout</button>
-      {/* <button onClick={() => navigate("/home/info")}>info</button> */}
-      <br />
-      <br />
       <Link to="/home"> Home </Link>
-      {""}
       <Link to="/todo"> Todos </Link>
-      {""}
-      {/* <Link to="/userPosts"> MyPosts </Link> */}
-      {""}
       <Link to="/posts"> AllPosts </Link>
-
-      <br />
+      <Link to={`/posts/${user.username}`}>My Posts</Link>
     </nav>
   );
 }
