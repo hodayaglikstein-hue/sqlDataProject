@@ -28,7 +28,7 @@ function UpdatePost(props) {
         </select>
         <label htmlFor="body">Value:</label>
         <textarea id="body" name="body" required></textarea>
-        <input type="submit" />
+        <button type="submit">Submit</button>
       </form>
     </>
   );

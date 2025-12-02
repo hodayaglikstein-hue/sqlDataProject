@@ -19,12 +19,10 @@ function PostData(props) {
                 setCommentPostId(post.id);
               }}
             >
-              {post.title}
+              {post.writer} - {post.title}
             </h2>
             <h3>{post.body}</h3>
             <h4>Post Id: {post.id}</h4>
-            <h4>User Id: {post.user_id}</h4>
-            <h4>Writer: {post.writer}</h4>
 
             {commentShow && post.id === commentPostId && (
               <Comments post_id={post.id} />
